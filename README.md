@@ -31,7 +31,7 @@
 
 ## 📖 About the Project
 
-**Business 360** is a comprehensive, multi-view Power BI dashboard built for **AtliQ Hardware Ltd** — designed to replace siloed Excel reports with a single, interactive analytics platform accessible to all business departments.
+**Business 360** is a comprehensive, multi-page Power BI dashboard built for **AtliQ Hardware Ltd** — designed to replace siloed Excel reports with a single, interactive analytics platform accessible to all business departments.
 
 The dashboard enables stakeholders across Finance, Sales, Marketing, Supply Chain, and Executive teams to monitor KPIs, compare performance against benchmarks, and make faster, data-driven decisions.
 
@@ -68,8 +68,8 @@ Key challenges:
 
 ## 📊 Dashboard Views
 
-### 🏠 Home Page
-A clean navigation landing page with quick access to all 5 views:
+### 🏠 Home Page [https://github.com/addityaa95/Business360/blob/main/B-Dashboard.png]
+A clean navigation landing page with quick access to all 5 Department Dashboards:
 
 | View | Purpose |
 |---|---|
@@ -81,7 +81,7 @@ A clean navigation landing page with quick access to all 5 views:
 
 ---
 
-### 💰 Finance View
+### 💰 Finance View [https://github.com/addityaa95/Business360/blob/main/B-Finance.png]
 > *"Get the complete P&L statement for any customer / product / country — over any time period."*
 
 **Key Metrics Displayed:**
@@ -105,7 +105,7 @@ A clean navigation landing page with quick access to all 5 views:
 
 ---
 
-### 🛒 Sales View
+### 🛒 Sales View [https://github.com/addityaa95/Business360/blob/main/B-Sale.png]
 > *"Analyse customer and product performance across Net Sales and Gross Margin in a profitability/growth matrix."*
 
 **Top Products by Net Sales:**
@@ -123,7 +123,7 @@ A clean navigation landing page with quick access to all 5 views:
 
 ---
 
-### 📣 Marketing View
+### 📣 Marketing View [https://github.com/addityaa95/Business360/blob/main/B-Market.png]
 > *"Analyse product performance by region across key metrics — Net Sales, Gross Margin and Net Profit — in a profitability/growth matrix."*
 
 **Regional Performance:**
@@ -138,7 +138,7 @@ A clean navigation landing page with quick access to all 5 views:
 
 ---
 
-### 🚚 Supply Chain View
+### 🚚 Supply Chain View [https://github.com/addityaa95/Business360/blob/main/B-SCA.png]
 > *"Monitor Forecast Accuracy, Net Error and supply risk profile by product, segment, category and customer."*
 
 **Top-Level KPIs:**
@@ -167,7 +167,7 @@ A clean navigation landing page with quick access to all 5 views:
 
 ---
 
-### 👔 Executive View
+### 👔 Executive View [https://github.com/addityaa95/Business360/blob/main/B-Executive.png]
 > *"A top-level dashboard consolidating the most important insights from all business dimensions for C-suite executives."*
 
 **Top-Level KPIs:**
@@ -197,54 +197,6 @@ A clean navigation landing page with quick access to all 5 views:
 | AQ Wi Power Dx1 | 4.4% | 36.97% ▼ |
 
 📌 *Insight: AtliQ Exclusive has the highest GM% among top customers (45.79%) despite lower revenue contribution (8.6%) — suggesting it's the most profitable customer to grow.*
-
----
-
-## 🗄️ Data Model
-
-The project uses a **Snowflake/Star Schema** connecting dimension and fact tables:
-
-```
-Dimension Tables:
-├── dim_customer        → customer_code, customer, market, region, channel
-├── dim_product         → product_code, product, segment, category, division
-├── dim_market          → market, sub_zone, region
-└── dim_date            → date, fiscal_year, fiscal_month
-
-Fact Tables:
-├── fact_sales_monthly        → customer_code, product_code, sold_qty, fiscal_year
-├── fact_forecast_monthly     → customer_code, product_code, forecast_qty
-├── fact_gross_price          → product_code, fiscal_year, gross_price
-├── fact_manufacturing_cost   → product_code, cost_year, manufacturing_cost
-├── fact_pre_invoice_deductions → customer_code, fiscal_year, pre_invoice_discount_pct
-└── fact_post_invoice_deductions → customer_code, product_code, discount_pct
-```
-
----
-
-## 📐 DAX Measures Used
-
-```dax
--- Net Sales
-Net Sales = SUM(fact_sales_monthly[net_sales_amount])
-
--- Gross Margin %
-GM % = DIVIDE([Gross Margin], [Net Sales], 0)
-
--- Net Profit %
-NP % = DIVIDE([Net Profit], [Net Sales], 0)
-
--- Forecast Accuracy %
-Forecast Accuracy % = 
-1 - DIVIDE(
-    SUM(fact_forecast_monthly[abs_error]),
-    SUM(fact_forecast_monthly[forecast_qty]),
-    0
-)
-
--- % Change vs Benchmark
-Chg % vs BM = DIVIDE([Net Sales] - [BM Net Sales], [BM Net Sales], 0)
-```
 
 ---
 
